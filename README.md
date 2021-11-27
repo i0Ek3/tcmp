@@ -1,6 +1,6 @@
 # tcmp
 
-> [WIP] A tool to compare types with generic(T) in Go.
+> A tool to compare types with generic(T) in Go.
 
 
 ## Getting Started
@@ -35,4 +35,4 @@ func main() {
 
 ## TODO
 
-Hold on...
+- refactor generic version, cannot work yet

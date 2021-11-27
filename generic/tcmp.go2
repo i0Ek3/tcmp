@@ -1,12 +1,25 @@
 package tcmp
 
-// T just for generic mode
-type T interface{}
+import (
+    "fmt"
+)
 
-type Slice struct{}
+type Type interface {
+    int, int8, int16, int32, int64, string
+}
 
-// cannot use generic T in normal mode
-func (s *Slice) Equal(t1, t2 []T) bool {
+type Compareable interface {
+    //
+}
+
+type TypeK interface {
+    Type,
+    Compareable
+}
+
+type Slice struct {}
+
+func (s *Slice) Equal[T Type](t1, t2 []T) bool {
     if len(t1) != len(t2) {
         return false
     }
@@ -18,7 +31,7 @@ func (s *Slice) Equal(t1, t2 []T) bool {
     return true
 }
 
-func (s *Slice) IsNil(t []T) bool {
+func (s *Slice) IsNil[T Type](t []T) bool {
     if t == nil {
         return true
     }
@@ -27,7 +40,7 @@ func (s *Slice) IsNil(t []T) bool {
 
 type Map struct{}
 
-func (m *Map) Equal(t1, t2 map[T]T) bool {
+func (m *Map) Equal[TK TypeK, T Type](t1, t2 map[TK]T) bool {
     if len(t1) != len(t2) {
         return false
     }
@@ -39,9 +52,10 @@ func (m *Map) Equal(t1, t2 map[T]T) bool {
     return true
 }
 
-func (m *Map) IsNil(t map[T]T) bool {
+func (s *Map) IsNil[TK TypeK, T Type](t map[TK]T) bool {
     if t == nil {
         return true
     }
     return false
 }
+
